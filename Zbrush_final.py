@@ -46,7 +46,14 @@ class MyHandlers(FileSystemEventHandler):
             os.chdir("/Users/bimbo/Documents/Zbrush/Projects")
             for directory in os.listdir(os.getcwd()):
                 # print(directory)
-                if directory == new_zfile_name_name:
+
+                if not os.path.isfile(project_dir_path / new_zfile_name_name):
+                    os.chdir(project_dir_path)
+                    os.makedirs(new_zfile_name_name, exist_ok=True)
+                    os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}",
+                              f"/Users/bimbo/Documents/Zbrush/Projects/{new_zfile_name_name}/{new_zfile_name}")
+
+                elif directory == new_zfile_name_name:
 
                     os.chdir(f"/Users/bimbo/Documents/Zbrush/Projects/{directory}")
                     # print(os.getcwd())
@@ -56,16 +63,6 @@ class MyHandlers(FileSystemEventHandler):
                             os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/"
                                                                                f"{directory}/{new_zfile_name}")
                             print(f"The file {new_zfile_name} has been moved to the new location {project_dir_path/directory}")
-
-                elif not os.path.isfile(project_dir_path/new_zfile_name_name):
-                    os.chdir(project_dir_path)
-                    os.mkdir(new_zfile_name_name)
-                    os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/{new_zfile_name_name}/{new_zfile_name}")
-
-                    # Works but yields "FileExistsError: [Errno 17] File exists:" and doesn't let previous block to execute
-
-                else:
-                    os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/To_organise/{new_zfile_name}")
 
 
 
