@@ -44,14 +44,16 @@ class MyHandlers(FileSystemEventHandler):
             new_zfile_name_name, new_zfile_name_ext = os.path.splitext(new_zfile_name)
             # print(new_zfile_name_name)
             os.chdir("/Users/bimbo/Documents/Zbrush/Projects")
-            for directory in os.listdir(os.getcwd()):
+            for directory in (os.listdir(os.getcwd())):
                 # print(directory)
 
                 if not os.path.isfile(project_dir_path / new_zfile_name_name):
                     os.chdir(project_dir_path)
                     os.makedirs(new_zfile_name_name, exist_ok=True)
-                    os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}",
-                              f"/Users/bimbo/Documents/Zbrush/Projects/{new_zfile_name_name}/{new_zfile_name}")
+                    os.rename(os.path.join(f"/Users/bimbo/Desktop/{new_zfile_name}"),
+                              os.path.join(f"/Users/bimbo/Documents/Zbrush/Projects/{new_zfile_name_name}/{new_zfile_name}"))
+                    # problem probably is a nested loop one, same file tries to get renamed multiple times but isn't there anymore after being renamed
+                    # the first time
 
                 elif directory == new_zfile_name_name:
 
@@ -61,7 +63,7 @@ class MyHandlers(FileSystemEventHandler):
                         if existing_zfile == new_zfile_name:
                             os.remove(existing_zfile)
                             os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/"
-                                                                               f"{directory}/{new_zfile_name}")
+                                                                                f"{directory}/{new_zfile_name}")
                             print(f"The file {new_zfile_name} has been moved to the new location {project_dir_path/directory}")
 
 
