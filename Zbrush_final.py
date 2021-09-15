@@ -56,13 +56,19 @@ class MyHandlers(FileSystemEventHandler):
                             os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/"
                                                                                f"{directory}/{new_zfile_name}")
                             print(f"The file {new_zfile_name} has been moved to the new location {project_dir_path/directory}")
-                            # also want to add: if none of existing_zfile == new_zfile_name, add it to cwd anyways
 
-                        # elif existing_zfile != new_zfile_name: ## add creating new dirs for non-existing projects
-                        #     new_dir_path = new_zfile_name
-                        #     os.mkdir(new_dir_path)
-                        #     os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/"
-                        #                                                        f"{new_dir_path}")
+                elif not os.path.isfile(project_dir_path/new_zfile_name_name):
+                    os.chdir(project_dir_path)
+                    os.mkdir(new_zfile_name_name)
+                    os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/{new_zfile_name_name}/{new_zfile_name}")
+
+                    # Works but yields "FileExistsError: [Errno 17] File exists:" and doesn't let previous block to execute
+
+                else:
+                    os.rename(f"/Users/bimbo/Desktop/{new_zfile_name}", f"/Users/bimbo/Documents/Zbrush/Projects/To_organise/{new_zfile_name}")
+
+
+
 
 
 if __name__ == "__main__":
